@@ -54,9 +54,9 @@ program ccwc
 
 contains
 
-   subroutine CountBytes(filename, file_size)
+   subroutine CountBytes(filename, filesize)
       character(len=*), intent(in) :: filename
-      integer, intent(out) :: file_size
+      integer, intent(out) :: filesize
       integer :: ios
 
       open (unit=1, file=filename, status='old', action='read', iostat=ios)
@@ -65,7 +65,7 @@ contains
          stop
       end if
 
-      inquire (unit=1, size=file_size)
+      inquire (unit=1, size=filesize)
 
       close (1)
 
@@ -74,7 +74,9 @@ contains
    subroutine CountLines(filename, lines)
       character(len=*), intent(in) :: filename
       integer, intent(out) :: lines
-      integer :: ios
+      integer :: ios, i, filesize, filelen
+      character(len=:), allocatable :: filestr
+      character(len=1) :: currentChar
 
       lines = 0
 
@@ -84,13 +86,19 @@ contains
          stop
       end if
 
-      do
-         read (1, *, iostat=ios)
-         if (ios /= 0) exit
-         lines = lines + 1
-      end do
-
       close (1)
+
+      inquire (file=filename, size=filesize)
+      allocate (character(len=filesize) :: filestr)
+      open (unit=1, file=filename, access='stream')
+      read (1) filestr
+      close (1)
+      filelen = len_trim(filestr)
+      do i = 1, filelen
+         if (iachar(filestr(i:i)) == 10) then
+            lines = lines + 1
+         end if
+      end do
 
    end subroutine CountLines
 
