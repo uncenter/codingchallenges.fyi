@@ -61,7 +61,7 @@ contains
 
       open (unit=1, file=filename, status='old', action='read', iostat=ios)
       if (ios /= 0) then
-         print *, 'Error opening file ', filename
+         print *, 'ccwc: ', filename, ': open: No such file or directory'
          stop
       end if
 
@@ -80,13 +80,7 @@ contains
 
       open (unit=1, file=filename, status='old', action='read', iostat=ios)
       if (ios /= 0) then
-         print *, 'Error opening file ', filename
-         stop
-      end if
-
-      open (unit=1, file=filename, status='old', action='read', iostat=ios)
-      if (ios /= 0) then
-         print *, 'Error opening file ', filename
+         print *, 'ccwc: ', filename, ': open: No such file or directory'
          stop
       end if
 
@@ -111,7 +105,7 @@ contains
 
       open (unit=1, file=filename, status='old', action='read', iostat=ios)
       if (ios /= 0) then
-         print *, 'Error opening file ', filename
+         print *, 'ccwc: ', filename, ': open: No such file or directory'
          stop
       end if
 
