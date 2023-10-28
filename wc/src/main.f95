@@ -138,7 +138,7 @@ contains
          end if
       end do
 
-      close (1, status='keep')
+      close (1)
 
    end subroutine CountWords
 
